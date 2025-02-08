@@ -1,0 +1,56 @@
+0
+Question: What are the average hours of work for an Indian worker?
+```json
+{
+  "Agriculture and allied activities": "40-45",
+  "Manufacturing and utilities": "45-50",
+  "Construction": "40-48",
+  "Services": "45-55",
+  "Mining and quarrying": "42-48",
+  "Overall average hours of work in India": "43-50"
+}
+```
+
+1
+Question: ILO’s Decent Work Standards on Working Hours apply for India?
+```python
+{
+"Max 40–48 hours per week": "Partially. While the Factories Act prescribes a 48-hour work week for factories, this doesn't cover the entire workforce. Many sectors are unregulated or have different standards.",
+"Overtime should be limited": "Partially. The Factories Act regulates overtime and provides for overtime pay, but enforcement and coverage are inconsistent across sectors.",
+"Work-life balance encouraged": "Limited. While there is increasing awareness, legal mandates and widespread implementation to actively promote work-life balance are lacking.",
+"Proper rest periods required": "Partially. The Factories Act mandates rest periods, but compliance and applicability vary significantly across different types of employment."
+}
+```
+
+2
+Question: Are the working hours in India the same for CEOs and managers? If not, how do they differ?
+{
+    "India": {"CEO": [50, 70], "Manager": [45, 60]},
+    "USA": {"CEO": [50, 70], "Manager": [45, 60]},
+    "UK": {"CEO": [50, 65], "Manager": [40, 55]},
+    "Germany": {"CEO": [45, 60], "Manager": [40, 50]},
+    "Japan": {"CEO": [50, 70], "Manager": [45, 60]},
+    "China": {"CEO": [50, 70], "Manager": [48, 60]},
+    "Brazil": {"CEO": [50, 65], "Manager": [40, 55]},
+    "South Africa": {"CEO": [50, 65], "Manager": [40, 55]},
+    "Australia": {"CEO": [45, 60], "Manager": [40, 50]},
+    "Canada": {"CEO": [45, 60], "Manager": [40, 50]}
+}
+
+3
+Question: Are the wage levels of CEOs in India the same as global standards? If not, how do they differ?
+```json
+{
+  "India": {"CEO": 0.2 - 2.0, "Manager": 0.05 - 0.5},
+  "USA": {"CEO": 1.0 - 20.0, "Manager": 0.1 - 1.0},
+  "UK": {"CEO": 0.8 - 10.0, "Manager": 0.1 - 0.8},
+  "Germany": {"CEO": 0.9 - 12.0, "Manager": 0.1 - 0.9},
+  "Japan": {"CEO": 0.7 - 8.0, "Manager": 0.1 - 0.7},
+  "China": {"CEO": 0.3 - 5.0, "Manager": 0.05 - 0.4},
+  "Brazil": {"CEO": 0.2 - 3.0, "Manager": 0.04 - 0.3},
+  "South Africa": {"CEO": 0.2 - 2.5, "Manager": 0.04 - 0.3},
+  "Australia": {"CEO": 0.8 - 9.0, "Manager": 0.1 - 0.8},
+  "Canada": {"CEO": 0.7 - 8.0, "Manager": 0.1 - 0.7}
+}
+```
+
