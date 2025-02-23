@@ -1,86 +1,102 @@
 import google.generativeai as genai
 import time
 from langchain.memory import ConversationBufferMemory
-
-import google.generativeai as genai
-import time
-from langchain.memory import ConversationBufferMemory
+import sys
 
 # Configure first Gemini API (Pro-Science)
 genai_A = genai
-genai_A.configure(api_key="")
+genai_A.configure(api_key="AIzaSyAJwnMtvgFRzhgPkmU4yMkOcOjufjX0NpQ")
 
 # Configure second Gemini API (Anti-Science)
 genai_B = genai
-genai_B.configure(api_key="")ß
+genai_B.configure(api_key="AIzaSyC0zRp76NXZrbM7IMBjZXoHo8Rt65GCaes")
 
 
-def query_gemini_A(prompt, memory=None):
+# Function to Simulate Typing Effect
+def typing_effect(text, typing_speed=0.003):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(typing_speed)
+    print()  # Add a newline at the end
+
+# Define Query Functions with Memory Usage
+def query_gemini_A(prompt, memory):
     model = genai_A.GenerativeModel("gemini-pro")
-    messages = []
+
+    # Retrieve past context from memory
+    past_context = memory.load_memory_variables({})["history"]
     
-    if memory:
-        messages.extend(memory.load_memory_variables({})["history"])
+    # Combine past context with the new prompt
+    full_prompt = f"{past_context}\n{prompt}" if past_context else prompt
     
-    messages.append({"role": "user", "content": prompt})
-    
-    response = model.generate_content(prompt)
+    response = model.generate_content(full_prompt)
     reply = response.text
-    
-    if memory:
-        memory.save_context({"input": prompt}, {"output": reply})
-    
+
+    # Save new conversation data
+    memory.save_context({"input": prompt}, {"output": reply})
+
     return reply
 
-
-def query_gemini_B(prompt, memory=None):
+def query_gemini_B(prompt, memory):
     model = genai_B.GenerativeModel("gemini-pro")
-    messages = []
+
+    # Retrieve past context from memory
+    past_context = memory.load_memory_variables({})["history"]
     
-    if memory:
-        messages.extend(memory.load_memory_variables({})["history"])
+    # Combine past context with the new prompt
+    full_prompt = f"{past_context}\n{prompt}" if past_context else prompt
     
-    messages.append({"role": "user", "content": prompt})
-    
-    response = model.generate_content(prompt)
+    response = model.generate_content(full_prompt)
     reply = response.text
-    
-    if memory:
-        memory.save_context({"input": prompt}, {"output": reply})
-    
+
+    # Save new conversation data
+    memory.save_context({"input": prompt}, {"output": reply})
+
     return reply
 
+# Memory for tracking arguments (Now Actually Used)
+memory_pro = ConversationBufferMemory()   # Memory for Pro-Motion (Professor X)
+memory_con = ConversationBufferMemory()   # Memory for Anti-Motion (Professor Y)
 
+# Define Debate Function
+def debate(topic, rounds=3):
+    print(f"\n🎤 **DEBATE BEGINS**: {topic}")
 
-memory_explorer = ConversationBufferMemory()   # Memory for Explorer (Gemini API #1)
-memory_contributor = ConversationBufferMemory()   # Memory for Contributor (Gemini API #2)
-
-
-
-def discussion(topic, rounds=3):
-    print(f"💡 DISCUSSION TOPIC: {topic}")
-    
-    explorer_prompt = f"Start an open discussion on: {topic}. Share your thoughts. Don't provide too lenthy answers."
-    contributor_prompt = f"Continue the discussion on: {topic}. Share your thoughts. Don't provide too lenthy answers."
+    # Opening statements
+    pro_prompt = f"You are Professor X, an economist supporting the motion. Open the debate with strong arguments for why {topic}. Keep it short, max two sentences."
+    con_prompt = f"You are Professor Y, an economist against the motion. Respond with strong counterarguments against why {topic}. Keep it short, max two sentences."
 
     for i in range(rounds):
-        print(f"\n🔄 Round {i+1}")
+        print(f"\n🔄 **Round {i+1}**")
 
-        # Explorer (Gemini API #1) starts the discussion
-        response_explorer = query_gemini_A(explorer_prompt, memory_explorer)
-        print(f"🧠 EXPLORER (Gemini API #1): {response_explorer}")
+        # Opening argument by Pro-Motion
+        response_pro = query_gemini_A(pro_prompt, memory_pro)
+        print(f"✅ **Pro-Motion (Professor X)**: ", end="")
+        typing_effect(response_pro)
 
-        # Contributor (Gemini API #2) builds on the discussion
-        response_contributor = query_gemini_B(contributor_prompt, memory_contributor)
-        print(f"💡 CONTRIBUTOR (Gemini API #2): {response_contributor}")
+        # Rebuttal by Anti-Motion
+        response_con = query_gemini_B(con_prompt, memory_con)
+        print(f"❌ **Anti-Motion (Professor Y)**")
+        typing_effect(response_con)
 
-        # Refining prompts based on previous responses
-        explorer_prompt = f"Based on this, add further insights and new ideas: {response_contributor}"
-        contributor_prompt = f"Continue the discussion, bringing in new angles: {response_explorer}"
+        # Refining arguments for the next round
+        pro_prompt = f"Rebut this counterargument: {response_con}. Strengthen your position with data or logic. Keep it short, just a single paragraph."
+        con_prompt = f"Rebut this argument: {response_pro}. Strengthen your position with new angles. Keep it short, just a single paragraph."
 
         time.sleep(1)  # Prevent API rate limits
 
-    print("\n🔹 DISCUSSION CONCLUDED")
+    print("\n📢 **CLOSING STATEMENTS**")
 
-# Start Discussion
-discussion("90 hours workweek in India is good or bad?")
+    # Closing Arguments
+    pro_final = query_gemini_A("Summarize your final argument in one paragraph.", memory_pro)
+    con_final = query_gemini_B("Summarize your final argument in one paragraph.", memory_con)
+
+    print(f"✅ **Pro-Motion (Professor X) - Final Words**")
+    typing_effect(pro_final)
+    print(f"❌ **Anti-Motion (Professor Y) - Final Words**")
+    typing_effect(con_final)
+    print("\n🏆 **DEBATE CONCLUDED**")
+
+# Start Debate
+debate("Indians should work in their workplaces for 90 hours a week to boost the economy. ")
