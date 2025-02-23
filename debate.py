@@ -5,11 +5,11 @@ import sys
 
 # Configure first Gemini API (Pro-Science)
 genai_A = genai
-genai_A.configure(api_key="AIzaSyAJwnMtvgFRzhgPkmU4yMkOcOjufjX0NpQ")
+genai_A.configure(api_key="")
 
 # Configure second Gemini API (Anti-Science)
 genai_B = genai
-genai_B.configure(api_key="AIzaSyC0zRp76NXZrbM7IMBjZXoHo8Rt65GCaes")
+genai_B.configure(api_key="")
 
 
 # Function to Simulate Typing Effect
