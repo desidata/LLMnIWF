@@ -3,7 +3,7 @@
 import numpy as np
 from google import genai
 
-        Q1 = "What are the average hours of work for an Indian worker?"
+Q1 = "What are the average hours of work for an Indian worker?"
 Ins1 = f"""
         1. Your answer should return a dictionary object where the keys are the type of workers and the values are the estimated ranges of average hours of work. You have to answer the average wrok hour of the following sector.
                 1. Agriculture and allied activities
@@ -53,7 +53,7 @@ system_message = f"""You are an experience social scientist. Your task is to und
 
 messages = [f"{system_message}\n{q}\n{ins}" for q, ins in zip(qset, ins_set)]
 
-client = genai.Client(api_key="your key")
+client = genai.Client(api_key="AIzaSyAJwnMtvgFRzhgPkmU4yMkOcOjufjX0NpQ")
 for i in range(len(messages)):
     print(i)
     print(f"Question: {qset[i]}")
