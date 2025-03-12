@@ -20,6 +20,9 @@ api_B = "your api"   # API Key for Gemini_B
 gemini_A = CallGemini(api_A)
 gemini_B = CallGemini(api_B)
 
+model_A = gemini_A.configure()
+model_B = gemini_B.configure()
+
 # Updated memory buffers with correct parameters
 memory_proponent = ConversationBufferMemory(memory_key="history", return_messages=True)
 memory_opponent = ConversationBufferMemory(memory_key="history", return_messages=True)
@@ -35,12 +38,12 @@ def debate(topic, rounds=3):
         print(f"\nRound {i+1}")
 
         # Proponent (Gemini_A) argues FOR the topic
-        preponent = Query(gemini_A, proponent_prompt, memory_proponent)
+        preponent = Query(model_A, proponent_prompt, memory_proponent)
         response_proponent = preponent.query_gemini()
         print(f"PROPONENT (FOR the topic): {response_proponent}")
 
         # Opponent (Gemini_B) argues AGAINST the topic
-        oponent = Query(gemini_B, opponent_prompt, memory_opponent)
+        oponent = Query(model_B, opponent_prompt, memory_opponent)
         response_opponent = oponent.query_gemini()
         print(f"OPPONENT (AGAINST the topic): {response_opponent}")
 
