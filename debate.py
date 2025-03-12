@@ -13,8 +13,8 @@ memory_opponent = ConversationBufferMemory(memory_key="history", return_messages
 
 
 #  call two models with separate API keys
-api_A = "AIzaSyC2qa-soNqrWnOP8IxtgCosll7-iPCcgWM"   # API Key for Gemini_A
-api_B = "AIzaSyC2qa-soNqrWnOP8IxtgCosll7-iPCcgWM"   # API Key for Gemini_B
+api_A = "your api"   # API Key for Gemini_A
+api_B = "your api"   # API Key for Gemini_B
 
 # Configure the models
 gemini_A = CallGemini(api_A)
