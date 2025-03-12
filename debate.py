@@ -31,8 +31,8 @@ def debate(topic, rounds=3):
     print(f"DEBATE TOPIC: {topic}\n")
 
     # Initial Stance Prompts
-    proponent_prompt = f"Defend the topic: '{topic}'. Present strong arguments supporting it. Use economic, social, and productivity benefits."
-    opponent_prompt = f"Argue against the topic: '{topic}'. Provide strong counterarguments, highlighting risks and disadvantages."
+    proponent_prompt = f"Defend the topic: '{topic}'. Present strong arguments supporting it. Use economic, social, and productivity benefits. Keep it under 2 sentences."
+    opponent_prompt = f"Argue against the topic: '{topic}'. Provide strong counterarguments, highlighting risks and disadvantages. Keep it under 2 sentences."
 
     for i in range(rounds):
         print(f"\nRound {i+1}")
@@ -40,16 +40,16 @@ def debate(topic, rounds=3):
         # Proponent (Gemini_A) argues FOR the topic
         preponent = Query(model_A, proponent_prompt, memory_proponent)
         response_proponent = preponent.query_gemini()
-        print(f"PROPONENT (FOR the topic): {response_proponent}")
+        print(f"EMPLOYER: {response_proponent}")
 
         # Opponent (Gemini_B) argues AGAINST the topic
         oponent = Query(model_B, opponent_prompt, memory_opponent)
         response_opponent = oponent.query_gemini()
-        print(f"OPPONENT (AGAINST the topic): {response_opponent}")
+        print(f"EMPLOYEE: {response_opponent}")
 
         # Refining prompts based on discussion progress
-        proponent_prompt = f"Refute the opponent's arguments: {response_opponent}. Strengthen your stance."
-        opponent_prompt = f"Counter the proponent's claims: {response_proponent}. Expose weaknesses in their argument."
+        proponent_prompt = f"Refute the opponent's arguments: {response_opponent}. Strengthen your stance. Keep it under 2 sentences."
+        opponent_prompt = f"Counter the proponent's claims: {response_proponent}. Expose weaknesses in their argument. Keep it under 2 sentences."
 
         time.sleep(1)  # Prevent API rate limits
 
@@ -57,7 +57,3 @@ def debate(topic, rounds=3):
 
 # Start Debate
 debate("90-hour workweek in India: Good or Bad?")
-
-
-
-
